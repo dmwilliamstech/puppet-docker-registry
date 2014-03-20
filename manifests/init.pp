@@ -1,4 +1,4 @@
-class docker-registry($port='8000', $IP='0.0.0.0'){
+class docker-registry($port='8000', $ip='0.0.0.0'){
     include 'docker-registry::deps'
         
   if ! defined(Package['git']){package{'git':}}
@@ -30,7 +30,7 @@ class docker-registry($port='8000', $IP='0.0.0.0'){
          # provider=>'shell',
          # cwd=>'/usr/local/share/docker-registry',
          # command=>'pip install -r requirements.txt'
-              }->
+             # }->
           exec{'start_registry':
             path =>['/usr/bin', '/bin', '/usr/local/bin', '/usr/sbin'],
             provider=>'shell',
