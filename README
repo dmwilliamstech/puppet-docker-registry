@@ -7,10 +7,7 @@ A Puppet module for deploying a docker registry.
 
 My manifest is very easy:
 
-```
 class {'docker-registry':
   ip              =>'10.11.12.8',
   port            =>'8000'
 }     
-
-```
