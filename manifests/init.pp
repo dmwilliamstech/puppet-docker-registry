@@ -25,11 +25,11 @@ class docker-registry($port='8000', $IP='0.0.0.0'){
           ensure => "directory",
           mode=> 777
         }->
-        exec{'pip_install_requirements':
-          path =>['/usr/bin', '/bin', '/usr/local/bin', '/usr/sbin'],
-          provider=>'shell',
-          cwd=>'/usr/local/share/docker-registry',
-          command=>'pip install -r requirements.txt'
+       # exec{'pip_install_requirements':
+        #  path =>['/usr/bin', '/bin', '/usr/local/bin', '/usr/sbin'],
+         # provider=>'shell',
+         # cwd=>'/usr/local/share/docker-registry',
+         # command=>'pip install -r requirements.txt'
               }->
           exec{'start_registry':
             path =>['/usr/bin', '/bin', '/usr/local/bin', '/usr/sbin'],
