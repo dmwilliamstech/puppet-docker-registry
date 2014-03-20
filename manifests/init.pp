@@ -34,6 +34,7 @@ class docker-registry($port='8000', $ip='0.0.0.0'){
           exec{'start_registry':
             path =>['/usr/bin', '/bin', '/usr/local/bin', '/usr/sbin'],
             provider=>'shell',
+                cwd=>'/usr/local/share/docker-registry',
             logoutput=>true,
             command=>"gunicorn --access-logfile - --debug -k gevent -b $IP:$port -w 1 wsgi:application"
         }
