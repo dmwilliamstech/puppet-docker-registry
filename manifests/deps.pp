@@ -22,7 +22,21 @@ class docker-registry::deps{
     if ! defined(Package['python-backports-lzma']){package{'python-backports-lzma':}}
     if ! defined(Package['pyliblzma']){package{'pyliblzma':}}
     if ! defined(Package['Jinja2']){package{'Jinja2':}}
-
+        exec{'easy_install_jinja2':
+        path =>['/usr/bin', '/bin', '/usr/local/bin', '/usr/sbin'],
+        command=>'easy_install Jinja2',
+        provider=>shell
+        }
+        exec{'easy_install_rsa':
+        path =>['/usr/bin', '/bin', '/usr/local/bin', '/usr/sbin'],
+        command=>'easy_install rsa',
+        provider=>shell
+        }
+         exec{'easy_install_pyasn1':
+        path =>['/usr/bin', '/bin', '/usr/local/bin', '/usr/sbin'],
+        command=>'easy_install pyasn1',
+        provider=>shell
+        }
     exec{'get_latest_pip':
         path =>['/usr/bin', '/bin', '/usr/local/bin', '/usr/sbin'],
         cwd=>'/usr/local/share',
@@ -31,4 +45,12 @@ class docker-registry::deps{
         provider=>'shell',
         logoutput => true,
     }
+        exec{'install_latest_pip':
+            path =>['/usr/bin', '/bin', '/usr/local/bin', '/usr/sbin'],
+            cwd=>'/usr/local/share',
+            command => "python get-pip.py",
+            require=>Exec['get_latest_pip'],
+            provider=>'shell',
+            logoutput => true,
+        }
 }

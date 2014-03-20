@@ -10,13 +10,13 @@ class docker-registry($port='8000', $IP='0.0.0.0'){
             creates=>'/usr/local/share/docker-registry',
             provider=>'shell',
             logoutput => true,
-                creates=>'/usr/local/share/docker-registry'
         }->
         exec{'copy_config_file':
           path =>['/usr/bin', '/bin', '/usr/local/bin', '/usr/sbin'],
-          cwd=>'/usr/local/share/docker-registry',
+          cwd=>'/usr/local/share/docker-registry/config',
           command=>'cp config_sample.yml config.yml',
           provider=>'shell',
+              require=>Exec['get_latest_stable_docker_registry'],
           creates=>'/usr/local/share/docker-registry/config.yml',
             
         }->
@@ -34,6 +34,7 @@ class docker-registry($port='8000', $IP='0.0.0.0'){
           exec{'start_registry':
             path =>['/usr/bin', '/bin', '/usr/local/bin', '/usr/sbin'],
             provider=>'shell',
+            logoutput=>true,
             command=>"gunicorn --access-logfile - --debug -k gevent -b $IP:$port -w 1 wsgi:application"
         }
 }
