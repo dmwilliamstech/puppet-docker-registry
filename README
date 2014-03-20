@@ -1,0 +1,15 @@
+# puppet-docker-registry
+
+A Puppet module for deploying a docker registry.
+
+
+---
+
+My manifest is very easy:
+
+```
+ class {'docker-registry':
+    ip              =>'0.0.0.0',
+    port            =>'8000'
+  }     
+```
